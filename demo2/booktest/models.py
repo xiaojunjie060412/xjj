@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-
 # 继承models.Model的父类ORM功能
 class BookInfo(models.Model):
     title = models.CharField(max_length=20)
