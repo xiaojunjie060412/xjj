@@ -6,13 +6,21 @@
 </head>
 <body>
     <h3>这是列表页</h3>
-    <ul>
-        {% for b in books %}
-        <li><a href="/booktest/detail/{{ b.id }}/">{{ b.title }}</a></li>
-        {% endfor %}
-    </ul>
+    {% if books %}
+        <ul>
+            {% for b in books %}
+                {% if forloop.counter == 1 %}
+                    <li style="background-color:green">{{ forloop.counter }}<a href="{% url 'booktest:detail' b.id %}">{{ b.title }}</a></li>
+                {% else %}
+                    <li>{{ forloop.counter }}<a href="{% url 'booktest:detail' b.id %}">{{ b.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        没有书
+    {% endif %}
     <br><br><br><br><br>
-    <a href="/booktest/index/">返回主页</a>
+    <a href="{% url 'booktest:index' %}">返回主页</a>
 
 </body>
 </html>

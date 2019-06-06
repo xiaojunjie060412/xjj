@@ -6,13 +6,20 @@
 </head>
 <body>
     <h3>这是详情页</h3>
-    {{ book.title }}
-    <ul>
-        {% for hero in book.heroinfo_set.all %}
-        <li>{{ hero.name }}</li>
-        {% endfor %}
-    </ul>
+
+    {% if book %}
+        {{ book.title }}
+        <ul>
+            {% for hero in book.heroinfo_set.all %}
+            <li>{{ forloop.counter }}{{ hero.name }}</li>
+            {% empty %}
+                没有人物
+            {% endfor %}
+        </ul>
+    {% else %}
+        没有数据
+    {% endif %}
     <br><br><br><br><br>
-    <a href="/booktest/list/">返回列表页</a>
+    <a href="{% url 'booktest:list' %}">返回列表页</a>
 </body>
 </html>
