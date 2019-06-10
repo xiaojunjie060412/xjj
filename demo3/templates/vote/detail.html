@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详情页</title>
+</head>
+<body>
+    {{ problem.title }}
+    <form action="{% url 'vote:detail' problem.id %}" method="post">
+        <label><input type="radio" name="res" value="{{ problem.choice1 }}" checked="checked">{{ problem.choice1 }}</label>
+        <br>
+        <label><input type="radio" name="res" value="{{ problem.choice2 }}">{{ problem.choice2 }}</label>
+        <br>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

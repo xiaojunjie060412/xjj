@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>列表页</title>
+</head>
+<body>
+    <h3>问题列表</h3>
+    {% if problems %}
+    <ul>
+        {% for problem in problems %}
+            <li>
+                <a href="{% url 'vote:detail' problem.id %}">{{ problem.title }}</a>
+                <a href="{% url 'vote:result' problem.id %}">查看结果</a>
+            </li>
+        {% endfor %}
+
+    </ul>
+    {% else %}
+    没有书
+    {% endif %}
+</body>
+</html>
