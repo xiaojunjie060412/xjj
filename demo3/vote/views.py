@@ -14,14 +14,17 @@ def detail(req, id):
     if req.method == 'GET':
         return render(req, 'vote/detail.html', {'problem': problem})
     elif req.method == "POST":
-        if req.POST.get('res') == problem.choice1:
-            answer = Answer.objects.get(choice=problem.choice1)
-            answer.count += 1
-            answer.save()
-        elif req.POST.get('res') == problem.choice2:
-            answer = Answer.objects.get(choice=problem.choice2)
-            answer.count += 1
-            answer.save()
+        answer = Answer.objects.get(choice=req.POST.get('res'), relation=problem.id)
+        # if req.POST.get('res') == problem.choice1:
+        #     answer = Answer.objects.get(choice=problem.choice1)
+        #     answer.count += 1
+        #     answer.save()
+        # elif req.POST.get('res') == problem.choice2:
+        #     answer = Answer.objects.get(choice=problem.choice2)
+        #     answer.count += 1
+        #     answer.save()
+        answer.count += 1
+        answer.save()
         answer = problem.answer_set.all()
         return render(req, 'vote/result.html', {'problem': problem, "answer": answer})
 
