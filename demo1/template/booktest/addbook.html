@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加书</title>
+</head>
+<body>
+    <div class="container">
+
+        <form action="{% url 'booktest:addbook' %}" method="post">
+            书名：<input type="text" name="title"><br>
+            发行日期：<input type="date" name="pub_date"><br>
+            <input type="submit" value="提交">
+        </form>
+    </div>
+</body>
+</html>

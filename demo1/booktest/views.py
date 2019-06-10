@@ -52,6 +52,19 @@ def addhero(request, id):
         hero = HeroInfo()
         hero.name = request.POST.get("name")
         hero.content = request.POST.get("content")
+        hero.gender = request.POST.get("sex")
         hero.book = book
         hero.save()
         return HttpResponseRedirect('/detail/%s'%(id,))
+
+
+def addbook(request):
+    if request.method == 'GET':
+        return render(request, 'booktest/addbook.html', {})
+    elif request.method == 'POST':
+        book = BookInfo()
+        book.title = request.POST.get("title")
+        book.pub_date = request.POST.get("pub_date")
+
+        book.save()
+        return HttpResponseRedirect('/list/')
