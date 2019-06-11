@@ -1,35 +1,33 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Problem, Answer
+from django.views.generic import View
 # Create your views here.
 
 
-def list(req):
-    problems = Problem.objects.all()
-    return render(req, 'vote/list.html', {'problems': problems})
+class ListViews(View):
+
+    def get(self, req):
+        problems = Problem.objects.all()
+        return render(req, 'vote/list.html', locals())
 
 
-def detail(req, id):
-    problem = Problem.objects.get(pk=id)
-    if req.method == 'GET':
-        return render(req, 'vote/detail.html', {'problem': problem})
-    elif req.method == "POST":
-        answer = Answer.objects.get(choice=req.POST.get('res'), relation=problem.id)
-        # if req.POST.get('res') == problem.choice1:
-        #     answer = Answer.objects.get(choice=problem.choice1)
-        #     answer.count += 1
-        #     answer.save()
-        # elif req.POST.get('res') == problem.choice2:
-        #     answer = Answer.objects.get(choice=problem.choice2)
-        #     answer.count += 1
-        #     answer.save()
-        answer.count += 1
-        answer.save()
-        answer = problem.answer_set.all()
-        return render(req, 'vote/result.html', {'problem': problem, "answer": answer})
+class DetailViews(View):
+
+    def get(self, req, id):
+        problem = Problem.objects.get(pk=id)
+        return render(req, 'vote/detail.html', locals())
+
+    def post(self, req, id):
+        a_id = req.POST.get('res')
+        a = Answer.objects.get(pk=a_id)
+        a.count += 1
+        a.save()
+        return redirect(reverse('vote:result', args=(id,)))
 
 
-def result(req, id):
-    problem = Problem.objects.get(pk=id)
-    answer = problem.answer_set.all()
-    return render(req, 'vote/result.html', {'problem': problem, "answer": answer})
+class ResultViews(View):
+
+    def get(self, req, id):
+        problem = Problem.objects.get(pk=id)
+        return render(req, 'vote/result.html', locals())

@@ -6,12 +6,23 @@
 </head>
 <body>
     {{ problem.title }}
-    <form action="{% url 'vote:detail' problem.id %}" method="post">
-        <label><input type="radio" name="res" value="{{ problem.choice1 }}" checked="checked">{{ problem.choice1 }}</label>
-        <br>
-        <label><input type="radio" name="res" value="{{ problem.choice2 }}">{{ problem.choice2 }}</label>
-        <br>
-        <input type="submit" value="提交">
-    </form>
+    <ul>
+        <form action="{% url 'vote:detail' problem.id %}" method="post">
+            {% for a in problem.answer_set.all %}
+
+            {% if forloop.counter == 1 %}
+
+            <li><input type="radio" checked name="res" value="{{ a.id }}"> {{ a.choice }}</li>
+
+            {% else %}
+
+            <li><input type="radio" name="res" value="{{ a.id }}"> {{ a.choice }}</li>
+
+            {% endif %}
+
+            {% endfor %}
+            <input type="submit" value="提交">
+        </form>
+    </ul>
 </body>
 </html>

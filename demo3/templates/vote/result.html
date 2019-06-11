@@ -6,7 +6,7 @@
 </head>
 <body>
     <h3>{{ problem.title }}</h3>
-    {% for a in answer %}
+    {% for a in problem.answer_set.all %}
 
         {{ a.choice }}:{{ a.count }}票
     <br>
