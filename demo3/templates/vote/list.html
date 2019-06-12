@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>列表页</title>
-</head>
-<body>
+{% extends 'vote/base.html' %}
+
+{% block title %}
+<title>列表页</title>
+{% endblock %}
+
+{% block body %}
+    {% if request.user and request.user.is_authenticated %}
+        <h3>当前用户为 {{ request.user }} <a href="{% url 'vote:logout' %}">退出</a>  </h3>
+    {% endif %}
     <h3>问题列表</h3>
+
     {% if problems %}
     <ul>
         {% for problem in problems %}
@@ -19,5 +23,4 @@
     {% else %}
     没有书
     {% endif %}
-</body>
-</html>
+{% endblock %}

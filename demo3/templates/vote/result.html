@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>结果页</title>
-</head>
-<body>
+{% extends 'vote/base.html' %}
+
+{% block title %}
+<title>结果页</title>
+{% endblock %}
+
+{% block link %}
+<link rel="stylesheet" href="static/css/main.css">
+{% endblock %}
+
+{% block body %}
+
     <h3>{{ problem.title }}</h3>
     {% for a in problem.answer_set.all %}
 
@@ -12,5 +17,4 @@
     <br>
     {% endfor %}
     <a href="{% url 'vote:list' %}">返回</a>
-</body>
-</html>
+{% endblock %}
