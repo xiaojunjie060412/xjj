@@ -65,7 +65,7 @@ class LoginViews(View):
         user = authenticate(req, username=username, password=password)
         if user:
             login(req, user)
-            print('++++++++++++++++++++++')
+
             return redirect(reverse('vote:list'))
         else:
             lf = MyUserLoginForm()
