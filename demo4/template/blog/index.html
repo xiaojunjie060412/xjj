@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block left %}
-    {% for a in article %}
+    {% for a in page.object_list %}
     <article class="post post-{{ a.id }}">
         <header class="entry-header">
             <h1 class="entry-title">
@@ -21,7 +21,7 @@
             </div>
         </header>
         <div class="entry-content clearfix">
-            <p>{{ a.content|truncatechars:20 }}...</p>
+            <p>{{ a.content|safe|truncatechars:20 }}...</p>
             <div class="read-more cl-effect-14">
                 <a href="#" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
             </div>
@@ -38,16 +38,20 @@
     </div>
     -->
     <div class="pagination">
-                    <ul>
-                        <li><a href="">1</a></li>
-                        <li><a href="">...</a></li>
-                        <li><a href="">4</a></li>
-                        <li><a href="">5</a></li>
-                        <li class="current"><a href="">6</a></li>
-                        <li><a href="">7</a></li>
-                        <li><a href="">8</a></li>
-                        <li><a href="">...</a></li>
-                        <li><a href="">11</a></li>
-                    </ul>
-                </div>
+        <ul>
+            {% if page.has_previous %}
+                <li><a href="{{ page.path }}?page={{ page.previous_page_number }}">上一页</a></li>
+            {% endif %}
+            {% for i in page.paginator.page_range %}
+                {% if i == page.number %}
+                    <li class="current"><a href="#">{{ i }}</a></li>
+                {% else %}
+                    <li><a href="{{ page.path }}?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if page.has_next %}
+                <li><a href="{{ page.path }}?page={{ page.next_page_number }}">下一页</a></li>
+            {% endif %}
+        </ul>
+    </div>
 {% endblock %}
