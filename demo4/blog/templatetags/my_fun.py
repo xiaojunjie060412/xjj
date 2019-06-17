@@ -1,5 +1,5 @@
 from django.template import Library
-from ..models import Article, Tag, Classify
+from ..models import Article, Tag, Classify, Ads
 
 register = Library()
 
@@ -22,3 +22,8 @@ def getclassify():
 @register.simple_tag
 def tag():
     return Tag.objects.all()
+
+
+@register.simple_tag
+def getads():
+    return Ads.objects.all()

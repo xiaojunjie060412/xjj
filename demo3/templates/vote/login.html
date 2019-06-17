@@ -4,6 +4,31 @@
 <title>login</title>
 {% endblock %}
 
+{% block script %}
+    <script>
+        $(function(){
+            $("#id_username").blur(function(){
+                $.ajax({
+                    type: 'get',
+                    url: '/checkusername/?username=' + $("#id_username").val(),
+                    success: function(data){
+                        console.log(data);
+                        if(data['statecode']==0){
+                            $('#errorinfo').text(data['error'])
+                        }
+                    }
+                })
+
+            });
+            $("#myimg").click(function(){
+                $('#myimg').attr('src', '/verify/?t=' + new Date().getTime())
+            })
+        })
+    </script>
+{% endblock %}
+
+
+
 {% block body %}
     <form action="#" method="post">
         <h3>{{ errormessage }}</h3>
@@ -19,8 +44,11 @@
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="login">
                 <form action="{% url 'vote:login' %}" method="post">
+                    <li id="errorinfo"></li>
                     {% csrf_token %}
                     {{ lf }}
+                    <label for="id_verify">验证码:</label><img id="myimg" src="{% url 'vote:verify' %}" alt="">
+                    <input type="text" name="verify" class="form-control" maxlength="150" required="" id="id_verify">
                     <button type="submit">登录</button>
                 </form>
             </div>
