@@ -139,3 +139,12 @@ EMAIL_PORT = 25  # 发件箱的SMTP服务器端口
 EMAIL_HOST_USER = 'xjj060412@163.com'  # 发送邮件的邮箱地址
 EMAIL_HOST_PASSWORD = 'xiao21222'
 DEFAULT_FROM_EMAIL = 'xjj <xjj060412@163.com>'
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "redis_cache.cache.RedisCache",
+        "LOCATION": "localhost:6379",
+        'TIMEOUT': 60,
+    },
+}

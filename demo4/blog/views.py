@@ -8,6 +8,8 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 from comment.models import Comment
 from django.http import HttpResponse
 from demo4 import settings
+from django.views.decorators.cache import cache_page
+
 
 # Create your views here.
 
@@ -15,6 +17,9 @@ from demo4 import settings
 class IndexView(View):
 
     def get(self, req):
+        pass
+# @cache_page(60*5)
+def index(req):
         article = Article.objects.all()
 
         pagenum = req.GET.get('page')

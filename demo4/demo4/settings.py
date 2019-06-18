@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blog',
     'comment',
     'tinymce',
+    'haystack',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +146,22 @@ EMAIL_HOST_USER = 'xjj060412@163.com'  # 发送邮件的邮箱地址
 EMAIL_HOST_PASSWORD = 'xiao21222'
 DEFAULT_FROM_EMAIL = 'xjj <xjj060412@163.com>'
 
+
+CACHES = {
+    "default": {
+        "BACKEND": "redis_cache.cache.RedisCache",
+        "LOCATION": "localhost:6379",
+        'TIMEOUT': 60,
+    },
+}
+
+# 配置搜索信息
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'blog.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

@@ -73,7 +73,9 @@ class LoginViews(View):
         if user:
             if user[0].check_password(password):
                 if user[0].is_active:
-                    if verify == req.session.get('verifycode'):
+                    # if verify == req.session.get('verifycode'):
+                    from django.core.cache import cache
+                    if verify == cache.get('verifycode'):
 
                         user1 = authenticate(req, username=username, password=password)
                         login(req, user1)
@@ -213,7 +215,9 @@ class VerifyView(View):
         draw.text((75, 2), rand_str[3], font=font, fill=fontcolor)
         # 释放画笔
         del draw
-        req.session['verifycode'] = rand_str
+        # req.session['verifycode'] = rand_str
+        from django.core.cache import cache
+        cache.set('verifycode', rand_str, 300)
         f = io.BytesIO()
         im.save(f, 'png')
         # 将内存中的图片数据返回给客户端，MIME类型为图片png
